@@ -48,15 +48,62 @@ public class App extends Application {
         lodgingCharge = new TextField();
         Button calculator = new Button("Calculate");
         
-        Label NumdaysTrip = new Label("Number of days on the trip:");
+       
+        grid.add(new Label("Number of days on the trip:"), 0, 0);
+        grid.add(NumdaysTrip, 1, 0);
+
+        grid.add(new Label("Amount of airfare $:"), 0, 1);
+        grid.add(airfare, 1, 1);
+
+        grid.add(new Label("Car rental fees $:"), 0, 2);
+        grid.add(carRentalFee, 1, 2);
+
+        grid.add(new Label("Miles driven (private vehicle):"), 0, 3);
+        grid.add(miles, 1, 3);
+
+        grid.add(new Label("Parking fees $:"), 0, 4);
+        grid.add(parkingFees, 1, 4);
+
+        grid.add(new Label("Taxi charges $:"), 0, 5);
+        grid.add(taxiCharge, 1, 5);
+
+        grid.add(new Label("Conference/Seminar fees $:"), 0, 6);
+        grid.add(registrationFees, 1, 6);
+
+        grid.add(new Label("Lodging charges (per night) $:"), 0, 7);¡
+        grid.add(lodgingCharge, 1, 7);
         
+        calculator.setOnAction(e -> calculateExpenses());
+        
+        
+        Scene scene = new Scene(grid, 400, 400);
+        stage.setTitle("Travel Expense Calculator");
         stage.setScene(scene);
        
         stage.show();
     }
     private void calculateExpenses() {
+        int days = Integer.parseInt(NumdaysTrip.getText());
+        if (days <= 0) {
+        System.out.println("Wrong amount of days inputted");
+        }
+        
         double airfaire = Double.parseDouble(airfare.getText());
         double carFee = Double.parseDouble(carRentalFee.getText());
+        double doubleMiles = Double.parseDouble(miles.getText());
+        double doubleParkingFees = Double.parseDouble(parkingFees.getText());
+        double lodging = Double.parseDouble(lodgingCharge.getText());
+        double conference = Double.parseDouble(lodgingCharge.getText());
+        
+        double expenses = airfaire + carFee + doubleMiles 
+                + doubleParkingFees + lodging + conference;
+        
+        double mealExpenses = 37 * days;
+        double parkingExpenses = 10 * days;
+        double taxiExpenses = 20 * days;
+        double lodgingExpenses = 95 * days;
+        double allowedDriven = 0.27 * doubleMiles;
+        
         
         
     }
