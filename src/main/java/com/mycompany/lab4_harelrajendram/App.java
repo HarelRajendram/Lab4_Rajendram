@@ -30,7 +30,7 @@ public class App extends Application {
         miles = new TextField();
         parkingFees = new TextField();
         taxiCharge = new TextField();
-        registrationFees = new TextField();
+        registrationFees = new TextField(); 
         lodgingCharge = new TextField();
         
         Label NumdaysTrip = new Label("Number of days on the trip:");
