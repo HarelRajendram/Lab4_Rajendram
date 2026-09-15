@@ -33,7 +33,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
-        
+        //setting the size and shape of the gridPane
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -49,7 +49,7 @@ public class App extends Application {
         lodgingCharge = new TextField();
         Button calculator = new Button("Calculate");
         
-       
+       //adding the order of each labels and textfields
         grid.add(new Label("Number of days on the trip:"), 0, 0);
         grid.add(NumdaysTrip, 1, 0);
 
@@ -76,15 +76,27 @@ public class App extends Application {
         
         calculator.setOnAction(e -> calculateExpenses());
         grid.add(calculator, 0,8,2,1);
+        
+        grid.add(new Label("Total expense: "),0 ,9);
         grid.add(totalExpense, 1, 9);
         
+        grid.add(new Label("Total allowable expense: "),0 ,10);
+        grid.add(AllowableExpense, 1,10);
         
-        Scene scene = new Scene(grid, 500, 400);
+        grid.add(new Label("excess expense: "), 0, 11);
+        grid.add(ExcessExpense,1,11);
+        
+         grid.add(new Label("saved expense: "), 0, 12);
+        grid.add(SavedExpense,1,12);
+       
+        
+        Scene scene = new Scene(grid, 540, 520);
         stage.setTitle("Travel Expense Calculator");
         stage.setScene(scene);
        
         stage.show();
     }
+    // method to calculate the expenses
     private void calculateExpenses() {
         int days = Integer.parseInt(NumdaysTrip.getText());
         if (days <= 0) {
@@ -119,16 +131,17 @@ public class App extends Application {
         AllowableExpense.setText(String.format("$%.2f", totalAllowable));
         ExcessExpense.setText(String.format("$%.2f", excess));
         SavedExpense.setText(String.format("$%.2f", saved));
-
+       
 
     }
+    //helper method to parse integers to positive numbers
     private int parsePositiveInt(String text) {
         if (text == null || text.trim().isEmpty()) {
             return 0;
         }
         return Integer.parseInt(text.trim());
     }
-
+    // helper method to parse double to positive numbers
     private double parsePositiveDouble(String text) {
         if (text == null || text.trim().isEmpty()) {
         return 0.0;
