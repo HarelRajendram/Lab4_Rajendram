@@ -1,5 +1,6 @@
 package com.mycompany.lab4_harelrajendram;
 
+import static java.lang.Double.parseDouble;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -70,13 +71,13 @@ public class App extends Application {
         grid.add(new Label("Conference/Seminar fees $:"), 0, 6);
         grid.add(registrationFees, 1, 6);
 
-        grid.add(new Label("Lodging charges (per night) $:"), 0, 7);¡
+        grid.add(new Label("Lodging charges (per night) $:"), 0, 7);
         grid.add(lodgingCharge, 1, 7);
         
         calculator.setOnAction(e -> calculateExpenses());
         
         
-        Scene scene = new Scene(grid, 400, 400);
+        Scene scene = new Scene(grid, 500, 400);
         stage.setTitle("Travel Expense Calculator");
         stage.setScene(scene);
        
@@ -92,18 +93,18 @@ public class App extends Application {
         double carFee = Double.parseDouble(carRentalFee.getText());
         double doubleMiles = Double.parseDouble(miles.getText());
         double doubleParkingFees = Double.parseDouble(parkingFees.getText());
-        double lodging = Double.parseDouble(lodgingCharge.getText());
-        double conference = Double.parseDouble(lodgingCharge.getText());
+        double lodging = parseDouble(lodgingCharge.getText());
+        double conference = parseDouble(registrationFees.getText());
+        double doubleTaxi = parseDouble(taxiCharge.getText());
+       
         
-        double expenses = airfaire + carFee + doubleMiles 
-                + doubleParkingFees + lodging + conference;
+        double totalExpenses = airfaire + carFee + (doubleMiles * 0.27) + doubleParkingFees 
+                + doubleTaxi + conference + (lodging * days);
         
         double mealExpenses = 37 * days;
-        double parkingExpenses = 10 * days;
-        double taxiExpenses = 20 * days;
-        double lodgingExpenses = 95 * days;
-        double allowedDriven = 0.27 * doubleMiles;
-        
+        double parkingExpenses = Math.min(doubleParkingFees, 10.0 * days);;
+        double taxiExpenses = Math.min(doubleTaxi, 20 * days);
+        double lodgingExpenses = Math.min(lodging, 95 * days);
         
         
     }
