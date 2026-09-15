@@ -104,6 +104,7 @@ public class App extends Application {
         return;
         }
         
+        try {
         double airfaire = parsePositiveInt(airfare.getText());
         double carFee = parsePositiveDouble(carRentalFee.getText());
         double doubleMiles = parsePositiveDouble(miles.getText());
@@ -131,7 +132,9 @@ public class App extends Application {
         AllowableExpense.setText(String.format("$%.2f", totalAllowable));
         ExcessExpense.setText(String.format("$%.2f", excess));
         SavedExpense.setText(String.format("$%.2f", saved));
-       
+        } catch (NumberFormatException e) {
+        System.out.println("Error: Invalid number formatted, please valid numbers in all of the fields");
+        }
 
     }
     //helper method to parse integers to positive numbers
