@@ -75,6 +75,8 @@ public class App extends Application {
         grid.add(lodgingCharge, 1, 7);
         
         calculator.setOnAction(e -> calculateExpenses());
+        grid.add(calculator, 0,8,2,1);
+        grid.add(totalExpense, 1, 9);
         
         
         Scene scene = new Scene(grid, 500, 400);
@@ -87,26 +89,51 @@ public class App extends Application {
         int days = Integer.parseInt(NumdaysTrip.getText());
         if (days <= 0) {
         System.out.println("Wrong amount of days inputted");
+        return;
         }
         
-        double airfaire = Double.parseDouble(airfare.getText());
-        double carFee = Double.parseDouble(carRentalFee.getText());
-        double doubleMiles = Double.parseDouble(miles.getText());
-        double doubleParkingFees = Double.parseDouble(parkingFees.getText());
-        double lodging = parseDouble(lodgingCharge.getText());
-        double conference = parseDouble(registrationFees.getText());
-        double doubleTaxi = parseDouble(taxiCharge.getText());
+        double airfaire = parsePositiveInt(airfare.getText());
+        double carFee = parsePositiveDouble(carRentalFee.getText());
+        double doubleMiles = parsePositiveDouble(miles.getText());
+        double doubleParkingFees = parsePositiveDouble(parkingFees.getText());
+        double lodging = parsePositiveDouble(lodgingCharge.getText());
+        double conference = parsePositiveDouble(registrationFees.getText());
+        double doubleTaxi = parsePositiveDouble(taxiCharge.getText());
        
         
         double totalExpenses = airfaire + carFee + (doubleMiles * 0.27) + doubleParkingFees 
                 + doubleTaxi + conference + (lodging * days);
         
         double mealExpenses = 37 * days;
-        double parkingExpenses = Math.min(doubleParkingFees, 10.0 * days);;
+        double parkingExpenses = Math.min(doubleParkingFees, 10.0 * days);
         double taxiExpenses = Math.min(doubleTaxi, 20 * days);
-        double lodgingExpenses = Math.min(lodging, 95 * days);
+        double lodgingExpenses = Math.min(lodging, 95) * days;
         
+        double totalAllowable = airfaire + carFee + (doubleMiles * 0.27) + conference +
+                mealExpenses + parkingExpenses + taxiExpenses + lodgingExpenses;
         
+        double excess = Math.max(0, totalExpenses - totalAllowable);
+        double saved = Math.max(0, totalAllowable - totalExpenses);
+        
+        totalExpense.setText(String.format("$%.2f", totalExpenses));
+        AllowableExpense.setText(String.format("$%.2f", totalAllowable));
+        ExcessExpense.setText(String.format("$%.2f", excess));
+        SavedExpense.setText(String.format("$%.2f", saved));
+
+
+    }
+    private int parsePositiveInt(String text) {
+        if (text == null || text.trim().isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(text.trim());
+    }
+
+    private double parsePositiveDouble(String text) {
+        if (text == null || text.trim().isEmpty()) {
+        return 0.0;
+        }
+        return parseDouble(text.trim());
     }
 
     public static void main(String[] args) {
